@@ -1,7 +1,7 @@
 const express = require('express')
 const cors = require('cors')
 require('dotenv').config()
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 const app = express()
 const port = process.env.PORT || 5000;
 
@@ -35,6 +35,16 @@ async function run() {
     const spotCollection = client.db('spotDB').collection('spot')
 
 
+
+    // Read of show data from server
+    app.get('/spot',async(req, res) =>{
+      const cursor = spotCollection.find()
+      const result = await cursor.toArray()
+      res.send(result)
+    })
+
+
+
     // To Sent data From Clint Site
     app.post('/spot',async(req,res)=>{
       const newSpot = req.body;
@@ -43,6 +53,15 @@ async function run() {
       res.send(result);
     })
 
+
+
+    // Delete operation
+    app.delete('/spot/:id', async(req,res)=>{
+      const id = req.params.id;
+      const query = {_id: new ObjectId(id)}
+      const result = await spotCollection.deleteOne(query)
+      res.send(result)
+    })
 
 
 
