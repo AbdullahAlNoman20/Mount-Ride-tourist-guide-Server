@@ -35,6 +35,16 @@ async function run() {
     const spotCollection = client.db('spotDB').collection('spot')
 
 
+    // Edit Data OR Update
+    app.get('/spot/:id',async(req,res)=>{
+      const id = req.params.id;
+      const query = {_id: new ObjectId(id)}
+      const result = await spotCollection.findOne(query)
+      res.send(result)
+    })
+
+
+
 
     // Read of show data from server
     app.get('/spot',async(req, res) =>{
@@ -62,13 +72,6 @@ async function run() {
       const result = await spotCollection.deleteOne(query)
       res.send(result)
     })
-
-
-
-
-
-
-
 
 
     // Send a ping to confirm a successful connection
