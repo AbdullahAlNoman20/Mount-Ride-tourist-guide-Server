@@ -29,6 +29,29 @@ async function run() {
   try {
     // Connect the client to the server	(optional starting in v4.7)
     await client.connect();
+
+
+    // Where o put the data in Database
+    const spotCollection = client.db('spotDB').collection('spot')
+
+
+    // To Sent data From Clint Site
+    app.post('/spot',async(req,res)=>{
+      const newSpot = req.body;
+      console.log(newSpot) 
+      const result = await spotCollection.insertOne(newSpot)
+      res.send(result);
+    })
+
+
+
+
+
+
+
+
+
+
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
     console.log("Pinged your deployment. You successfully connected to MongoDB!");
