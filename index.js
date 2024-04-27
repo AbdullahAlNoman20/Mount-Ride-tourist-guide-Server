@@ -64,6 +64,33 @@ async function run() {
     })
 
 
+    // Update Data
+    app.put('/spot/:id', async(req,res)=>{
+      const id = req.params.id;
+      const filter = {_id: new ObjectId(id)}
+      const options = {upsert: true}
+      const updatedSpot = req.body;
+      const Spot = {
+        $set: {
+      name: updatedSpot.name,
+      email: updatedSpot.email,
+      spotName:updatedSpot.spotName,
+      photo:updatedSpot.photo,
+      country:updatedSpot.country,
+      location:updatedSpot.location,
+      description:updatedSpot.description,
+      cost:updatedSpot.cost,
+      season:updatedSpot.season,
+      time:updatedSpot.time,
+      visitor:updatedSpot.visitor
+        }
+      }
+
+      const result = await spotCollection.updateOne(filter,Spot,options)
+      res.send(result)
+    })
+
+
 
     // Delete operation
     app.delete('/spot/:id', async(req,res)=>{
