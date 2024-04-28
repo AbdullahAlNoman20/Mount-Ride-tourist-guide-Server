@@ -31,7 +31,7 @@ async function run() {
     await client.connect();
 
 
-    // Where o put the data in Database
+    // Where to put the data in Database
     const spotCollection = client.db('spotDB').collection('spot')
 
 
