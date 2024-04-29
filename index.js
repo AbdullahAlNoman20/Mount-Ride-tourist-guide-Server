@@ -53,6 +53,21 @@ async function run() {
       res.send(result)
     })
 
+    // Read of show data from server
+    app.get('/country',async(req, res) =>{
+      const cursor = spotCollection.find()
+      const country = await cursor.toArray()
+      res.send(country)
+    })
+
+
+    // Read of show data from server
+    app.get('/service',async(req, res) =>{
+      const cursor = spotCollection.find()
+      const service = await cursor.toArray()
+      res.send(service)
+    })
+
 
 
     // To Sent data From Clint Site
