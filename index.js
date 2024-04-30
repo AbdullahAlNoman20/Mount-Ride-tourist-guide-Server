@@ -33,6 +33,7 @@ async function run() {
 
     // Where to put the data in Database
     const spotCollection = client.db('spotDB').collection('spot')
+    const serviceCollection = client.db('spotDB').collection('service')
 
 
     // Edit Data OR Update
@@ -40,6 +41,15 @@ async function run() {
       const id = req.params.id;
       const query = {_id: new ObjectId(id)}
       const result = await spotCollection.findOne(query)
+      res.send(result)
+    })
+
+    // Find Single Data For Service Section
+    app.get('/service/:id',async(req,res)=>{
+      const id = req.params.id;
+      console.log(id)
+      const query = {_id: new ObjectId(id)}
+      const result = await serviceCollection.findOne(query)
       res.send(result)
     })
 
@@ -63,7 +73,7 @@ async function run() {
 
     // Read of show data from server
     app.get('/service',async(req, res) =>{
-      const cursor = spotCollection.find()
+      const cursor = serviceCollection.find()
       const service = await cursor.toArray()
       res.send(service)
     })
